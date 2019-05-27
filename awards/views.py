@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 import datetime as dt
-from .models import Project,Profile,Reviews,Votes
+from .models import Project,Profile,Reviews
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.db import models
@@ -14,15 +14,22 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
-from .tokens import account_activation_token
+# from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 # Rest Api
-from .permissions import IsAdminOrReadOnly
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from .serializer import ProjectSerializer,ProfileSerializer
-from rest_framework import status
+# from .permissions import IsAdminOrReadOnly
+# from rest_framework.response import Response
+# from rest_framework.views import APIView
+# from .serializer import ProjectSerializer,ProfileSerializer
+# from rest_framework import status
+
+
+def index(request):
+    profile = Profile.objects.all()
+    projects = Project.get_projects()
+    form = ReviewForm()
+    return render(request, 'index.html', {'projects':projects,"profile":profile, "form":form})
 
 def signup(request):
     if request.method == 'POST':
@@ -67,15 +74,15 @@ def activate(request, uidb64, token):
 def loader(request):
     return render(request, 'loader.html')
 
-def index(request):
-    date = dt.date.today()
-    photos = Project.objects.all()
-    # print(photos)
-    comm = ReviewForm()
-    profiles = Profile.objects.all()
-    # print(profiles)
-    form = ReviewForm()
-    return render(request, 'all-posts/index.html', {"date": date,"comm":comm, "photos":photos, "profiles":profiles, "form":form})
+# def index(request):
+#     date = dt.date.today()
+#     photos = Project.objects.all()
+#     # print(photos)
+#     comm = ReviewForm()
+#     profiles = Profile.objects.all()
+#     # print(profiles)
+#     form = ReviewForm()
+#     return render(request, 'all-posts/index.html', {"date": date,"comm":comm, "photos":photos, "profiles":profiles, "form":form})
 
 def new_project(request):
     current_user = request.user
@@ -133,7 +140,7 @@ def search_results(request):
         return render(request, 'all-posts/search.html',{"message":message})
 
 @login_required(login_url='/accounts/login/')
-def comment(request,image_id):
+def review(request,image_id):
     #Getting comment form data
     image =  Project.objects.get(id=image_id)
     if request.method == 'POST':

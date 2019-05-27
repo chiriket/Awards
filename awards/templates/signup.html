@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
 {% block content %}
 <div class="container">
     <div class="row signup-page">
         <div class="col-md-6">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5fp0VSnnfEmWHbsIFrkc8TJOJc8FEnstfmqDQTKnoo2wHVEPXMQ" alt="Phone images">
+            <img src="" alt="Phone images">
         </div>
         <div class="col-md-6">
             {% if form.errors %}
@@ -13,7 +13,7 @@
             {% endif %}
             <div class="signup-fields">
                 <div class="section">
-                    <h1>Instagram</h1>
+                   
                     <div class="form-section">
                         <form method="POST">
                             {% csrf_token %}

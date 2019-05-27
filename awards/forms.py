@@ -1,5 +1,5 @@
 from django import forms
-from .models import Image,Profile, Reviews
+from .models import Profile, Reviews
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -10,11 +10,7 @@ class SignupForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
-class ImageForm(forms.ModelForm):
-   
-    class Meta:
-        model = Image
-        exclude = ['likes', 'post_date', 'profile','user']
+
     
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -23,5 +19,5 @@ class ProfileForm(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Comments
+        model = Reviews
         exclude = ['image', 'user']
