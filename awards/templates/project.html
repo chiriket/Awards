@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{% block content %}
+{{block.super}}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card mb-3" id="img-proj">
+                <div>
+                    <img class="img-responsive" src="{{project.screenshot.url}}" alt="Card image cap" width="100%;"
+                        height="400px;">
+                </div>
+                <div class="card-body">
+                    <h5><strong>{{project.project_name}}</strong></h5>
+                    <p>{{project.location}}</p>
+                    <p class="card-text">{{project.project.user.username}}</p>
+                    <p class="card-text" style="font-size: 20px;"><small class="text-muted">{{project.pub_date}}</small></p>
+                    <a href="{% url 'rate' project.id %}"><button class="btn btn-outline-primary">Vote Now</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<div class="jumbotron">
+    <div class="row">
+
+        {% for item in rate %}
+        <div class="col-md-2">
+            <h6>{{request.user}}</h6>
+        </div>
+        <div class="col-md-2">
+            <h6>
+                <stong> Design </stong>
+            </h6>
+            {{item.design}}
+        </div>
+        <div class="col-md-2">
+            <h6>
+                <stong> Creativity </stong>
+            </h6>
+            {{item.creativity}}
+        </div>
+        <div class="col-md-3">
+            <h6>
+                <stong> Usability </stong>
+            </h6>
+            {{item.usability}}
+        </div>
+        <div class="col-md-3">
+            <h6>
+                <stong> Average </stong>
+            </h6>
+            {{item.average}}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

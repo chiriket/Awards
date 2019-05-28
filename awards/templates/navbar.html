@@ -35,7 +35,7 @@
             
           {% else %}
          
-          <button class="btn-2"> <a href="#"><i style="color:blue;" class="fa fa-settings fa-2x"></i></a> <a href="/accounts/login" style="color: white;">Log In</a> </button>
+          
           
 
     {% endif %}
@@ -45,14 +45,15 @@
   
   <div id="mySidenav" class="sidenav">
       <h3 style="color: white;"> <img float="right" src=" " alt="" height="150px"> Awards</h3>
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"> &times;</a>
+       
         <h6><a href="#" style="color: white;">{{ user.username|upper}}</a></h6> 
         <hr>
         <a href="/">Home</a>
         <a href="{% url 'signup'%}">Register</a>
-        <a href="#">Login</a>
-        <a href="#">Submit your site</a>
-        <a href="#">Contact</a>
+        <a style="font-size:15px;" class='btn btn-default' href="/accounts/login">Login</a>
+       
+        <a href="{%url 'upload_project'%}"> Submit your site </a>
+        
       </div>
 
     </nav>

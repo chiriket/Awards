@@ -8,7 +8,7 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile',blank=True, null=True)
-    bio = models.CharField(max_length=200)
+    Bio = models.TextField(max_length = 50,null = True)
     profile_pic = models.ImageField(upload_to='profile/')
     pub_date_created = models.DateTimeField(auto_now_add=True, null=True)
 
@@ -57,31 +57,43 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
+
 class Project(models.Model):
+    screenshot = models.ImageField(upload_to = 'images/')
+    project_name = models.CharField(max_length =10)
+    project_url = models.CharField(max_length =50)
+    # location = models.CharField(max_length =10)
+    profile = models.ForeignKey(Profile, null = True,related_name='project')
+    pub_date = models.DateTimeField(auto_now_add=True, null=True)
+    # user= models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     
-    project_name = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='images/')
-    recorded_demo = models.FileField(upload_to='documents/' , null=True)
-    project_description = models.CharField(max_length=30)
-    
-    project_url = models.CharField(max_length=70)
-    technologies_used = models.CharField(max_length=70)
-
-    profile = models.ForeignKey(Profile,on_delete=models.CASCADE, blank=True, null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True, null=True)
-    posted_time = models.DateTimeField(auto_now_add=True,)
-    
-
     class Meta:
-        ordering = ['-posted_time']
+        ordering = ['-pk']
 
-    def save_projects(self):
+    def save_project(self):
         self.save()
     
+   
+    
     @classmethod
-    def get_projects(cls):
-        projects = cls.objects.all()
-        return projects
+    def get_all_projects(cls):
+        project = Project.objects.all()
+        return project
+
+    @classmethod
+    def search_by_profile(cls,search_term):
+        projo = cls.objects.filter(profile__name__icontains=search_term)
+        return projo
+
+    @classmethod
+    def get_profile_projects(cls, profile):
+        project = Project.objects.filter(profile__pk = profile)
+        return project
+
+    @classmethod
+    def find_project_id(cls, id):
+        identity = Project.objects.get(pk=id)
+        return identity
 
 class Reviews(models.Model):
     comment = models.CharField(max_length = 300)

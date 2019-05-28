@@ -1,0 +1,19 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row" id="project">
+        <div class="col-md-2"></div>
+        <div class="col-md-8" id="formpro">
+            <h5>UPLOAD NEW PROJECTS</h5>
+            <form action="{% url 'upload_project' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form uploadform %}
+                <input type="submit" class="btn btn-outline-success" value="Upload">
+            </form>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock %}

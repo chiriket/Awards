@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.db import models
 from django.http import Http404
+# from .forms import ProjectForm,ProfileForm,ReviewsForm
 
 # Create your views here.
 from django.contrib.auth import login, authenticate
@@ -27,9 +28,24 @@ from django.core.mail import EmailMessage
 
 def index(request):
     profile = Profile.objects.all()
-    projects = Project.get_projects()
+    project = Project.objects.all()
+    # project = Project.objects.filter(Profile__pk = profile)
     form = ReviewForm()
-    return render(request, 'index.html', {'projects':projects,"profile":profile, "form":form})
+    return render(request, 'index.html', {'project':project,"profile":profile, "form":form})
+
+@login_required(login_url='/accounts/login/')
+def profile(request, username):
+    projo = Project.objects.all()
+    profile = User.objects.get(username=username)
+    # print(profile.id)
+    try:
+        profile_details = Profile.get_by_id(profile.id)
+    except:
+        profile_details = Profile.filter_by_id(profile.id)
+    projo = Project.get_profile_projects(profile.id)
+    title = f'@{profile.username} awwward projects and screenshots'
+
+    return render(request, 'profile.html', locals())
 
 def signup(request):
     if request.method == 'POST':
@@ -71,6 +87,20 @@ def activate(request, uidb64, token):
     else:
         return HttpResponse('Activation link is invalid!')
 
+# @login_required(login_url='/accounts/login')
+def upload_project(request):
+    if request.method == 'POST':
+        uploadform = ProjectForm(request.POST, request.FILES)
+        if uploadform.is_valid():
+            upload = uploadform.save(commit=False)
+            upload.profile = request.user.profile
+            upload.save()
+            return redirect('index')
+    else:
+        uploadform = ProjectForm()
+    return render(request,'upload_project.html',locals())
+
+
 def loader(request):
     return render(request, 'loader.html')
 
@@ -100,22 +130,6 @@ def new_project(request):
         form = ProjectForm()
     return render(request, 'new_project.html', {"form": form})
  
-def edit_profile(request):
-    date = dt.date.today()
-    current_user = request.user
-    profile = Profile.objects.get(user=current_user.id)
-    posts = Project.objects.filter(user=current_user)
-    if request.method == 'POST':
-        signup_form = EditForm(request.POST, request.FILES,instance=request.user.profile) 
-        if signup_form.is_valid():
-            signup_form.save()
-            return redirect('profile')
-    else:
-        signup_form =EditForm() 
-        
-
-    
-    return render(request, 'profile/edit_profile.html', {"date": date, "form":signup_form,"profile":profile, "posts":posts})
 
 def profile(request):
     date = dt.date.today()
@@ -152,3 +166,35 @@ def review(request,image_id):
             comment.save()
     return redirect('index')
 # Create your views here.
+
+# @login_required(login_url='/accounts/login')
+# def upload_project(request):
+#     if request.method == 'POST':
+#         uploadform = ProjectForm(request.POST, request.FILES)
+#         if uploadform.is_valid():
+#             upload = uploadform.save(commit=False)
+#             upload.profile = request.user.profile
+#             upload.save()
+#             return redirect('home_page')
+#     else:
+#         uploadform = ProjectForm()
+#     return render(request,'upload_project.html',locals())
+
+@login_required(login_url='/accounts/login/')
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            edit = form.save(commit=False)
+            edit.user = request.user
+            edit.save()
+            return redirect('profile/edit_profile')
+    else:
+        form = ProfileForm()
+
+    return render(request, 'profile/edit_profile.html', {'form':form})
+
+
+def view_project(request):
+    project = Project.objects.get_all()
+    return render(request,'home.html', locals())
