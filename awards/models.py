@@ -113,3 +113,31 @@ class Reviews(models.Model):
         return comments
 
 # Create your models here.
+
+class Rate(models.Model):
+    design = models.CharField(max_length=30)
+    usability = models.CharField(max_length=8)
+    creativity = models.CharField(max_length=8,blank=True,null=True)
+    average = models.FloatField(max_length=8)
+    user = models.ForeignKey(User,null = True)
+    project = models.ForeignKey(Project,related_name='rate',null=True)
+
+
+    def __str__(self):
+        return self.design
+
+    class Meta:
+        ordering = ['-id']
+
+    def save_rate(self):
+        self.save()
+
+    @classmethod
+    def get_rate(cls, profile):
+        rate = Rate.objects.filter(Profile__pk = profile)
+        return rate
+    
+    @classmethod
+    def get_all_rating(cls):
+        rating = Rate.objects.all()
+
