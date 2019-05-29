@@ -59,12 +59,12 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Project(models.Model):
-    screenshot = models.ImageField(upload_to = 'images/')
+    # screenshot = models.ImageField(upload_to = 'images/')
     project_name = models.CharField(max_length =10)
     project_url = models.CharField(max_length =50)
     # location = models.CharField(max_length =10)
     profile = models.ForeignKey(Profile, null = True,related_name='project')
-    pub_date = models.DateTimeField(auto_now_add=True, null=True)
+    # pub_date = models.DateTimeField(auto_now_add=True, null=True)
     # user= models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     
     class Meta:
@@ -140,4 +140,6 @@ class Rate(models.Model):
     @classmethod
     def get_all_rating(cls):
         rating = Rate.objects.all()
+
+
 
