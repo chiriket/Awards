@@ -3,7 +3,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/">
             <span style="font-size:30px; cursor:pointer" onclick="openNav()">&#9776; Menu</span> 
           </a>
 
@@ -41,37 +41,29 @@
     {% if user.is_authenticated %}
     
             {% if request.user.profile.profile_pic %}
-                <section> <img style="border-radius: 50% ; padding: 0.15rem;   background: linear-gradient(to right bottom, #2cd8a4, #2ec97b);" class=" img-circle"
+                <section> <img style="border-radius: 50% ; padding: 0.15rem;   background: linear-gradient(to right bottom, rgb(20, 207, 224), rgb(20, 207, 224));" class=" img-circle"
                 src="{{request.user.profile.profile_pic.url}}" alt="" width="50px" height="50px"> </section> <br>
+                
             {% else %}
-                <img style="border-radius: 50% ; padding: 0.15rem;  background: linear-gradient(to right bottom, #2cd88888, #2ec96970);" class=" img-circle"
+                <img style="border-radius: 50% ; padding: 0.15rem;  background: linear-gradient(to right bottom, rgb(20, 207, 224), rgb(20, 207, 224) );" class=" img-circle"
                 src="https://www.bristolbrewing.com/wp-content/uploads/2017/08/default-avatar.png" alt="" width="50px" height="50px"> </section> <br>
+                <div class="list-inline-item">
+                        <a class="btn btn-edit" href="{% url 'edit_profile' %}">Edit Profile</a>
+                </div>
             {% endif %}
 
             <div class="dropdown">
-                    <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton btn-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <h6><a href="#" style="color: white;">{{ user.username}}</a></h6> 
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/profile/">Profile</a>
-                    <a class="dropdown-item" href="/accounts/password/change">Change Password</a>
-                    <a class="dropdown-item" href="/logout">Log Out</a>
-                    </div>
+            <h6><a href="#" style="color: white;">{{ user.username}}</a></h6>
             </div>
-            <a href="{% url 'new-project'%}"><button id="btn-2">Submit Project</button></a> 
-            
-            
-            
-            
-          {% else %}
+           
+
+             
+            {% else %}
          
           
           
 
     {% endif %}
-    <div class="red" id="ohmy">
-           
-    </div>
   
   <div id="mySidenav" class="sidenav">
       <h3 style="color: white;"> <img float="right" src=" " alt="" height="150px"> Awards</h3>
@@ -79,7 +71,7 @@
         <h6><a href="#" style="color: white;">{{ user.username|upper}}</a></h6> 
         <hr>
         <a href="/">Home</a>
-        <a href="/accounts/register/" style="color:black; font-size: 13px;">REGISTER /</a>
+        <a href="/accounts/register/" style="color:black; font-size: 13px;">REGISTER </a>
         <a style="font-size:15px;" class='btn btn-default' href="/accounts/login">Login</a>
        
         <a href="{%url 'upload_project'%}"> Submit your site </a>

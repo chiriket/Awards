@@ -47,30 +47,21 @@ def profile(request, username):
 
     return render(request, 'profile.html', locals())
 
-# def signup(request):
-#     if request.method == 'POST':
-#         form = SignupForm(request.POST)
-#         if form.is_valid():
-#             user = form.save(commit=False)
-#             user.is_active = False
-#             user.save()
-#             current_site = get_current_site(request)
-#             mail_subject = 'Activate your Awards account.'
-#             message = render_to_string('n', {
-#                 'user': user,
-#                 'domain': current_site.domain,
-#                 # 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-#                 # 'token':account_activation_token.make_token(user),
-#             })
-#             to_email = form.cleaned_data.get('email')
-#             email = EmailMessage(
-#                         mail_subject, message, to=[to_email]
-#             )
-#             email.send()
-#             return HttpResponse('Please confirm your email address to complete the registration')
-#     else:
-#         form = SignupForm()
-#     return render(request, 'signup.html', {'form': form})
+def new_project(request):
+    current_user = request.user
+    profile = Profile.objects.get(user=current_user)
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.user = current_user
+            project.profile = profile
+            project.save()
+        return redirect('index')
+
+    else:
+        form = ProjectForm()
+    return render(request, 'new_project.html', {"form": form})
 
 def activate(request, uidb64, token):
     try:

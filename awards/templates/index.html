@@ -4,11 +4,9 @@
 {{block.super}}
 
 <div style="background-color:rgb(20, 207, 224);" id="main" class="container-fluid blue " >
+
     <h1 style="text-align:center; color:rgb(253, 253, 253);" > <img float="right" src="" alt="" height="150px"> AWARDS </h1>
     <h6 style="text-align:center; color:rgb(253, 253, 253);">{{date|date:"l d-F Y"}}</h6>
-
- 
-    
     <div class="mail">
             <form role="search" action="{% url 'search_results' %}">
                 <input type="text" name="username" class="formStyle" placeholder="Search" required >
@@ -40,7 +38,7 @@
                         <a href="/projects/{{ photos_item.id}}"><p style="text-align: center;"><img data-image-id="{{photos_item.id}}" data-toggle="modal" data-target="#{{photos_item.id}}" class="" src="{{photos_item.image.url}}" alt="pic"  height="410px" width="620px"></p></a> 
                                                  
                         <small style="font-family: 'Oregano', cursive;">Posted {{photos_item.posted_time|timesince}} ago</small>
-                        <!--  -->
+                        
                         <h4>Reviews</h4>
                         <h6 class="Reviews">
                                
@@ -82,12 +80,21 @@
                 <br>   
         {% endfor %}
         {% for data in project %}
-
-        <div class="col-md-4" id="data">
+    
+        <div class="col-md-4">
+            
             <div class="hovereffect">
-                <img class="img-responsive" src="{{data.screenshot.url}}" alt="Card image cap" width="100%;" heigth="300px;">
+                    <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#myModal">
+                <img class="img-responsive" src="{{data.screenshot.url}}" alt="Card image cap" width="300px;" heigth="300px;">
+                </button>
                 <div class="overlay">
                     <a class="info" href="{% url 'vote' data.pk %}">VOTE NOW</a>
+                    <h6>Star Rating</h6>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
                 </div>
             </div>
             <div class="card-header">
@@ -119,6 +126,56 @@
     
 
    
+</div>
+
+{% for data in project %}
+<div class="modal" id="myModal" role="dialog">
+        <div class="modal-dialog">
+    
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <img class="img-responsive" src="{{data.screenshot.url}}"  width="300px;" heigth="300px;">
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+<div class="jumbotron">
+    <div class="row">
+        
+    {% for item in rate %}
+    <div class="col-md-2">
+        <h6>{{request.user}}</h6>
+    </div>
+    <div class="col-md-2">
+        <h6>
+            <strong> Design </strong>
+        </h6>
+        {{item.design}}
+    </div>
+    <div class="col-md-2">
+        <h6>
+            <strong> Creativity </strong>
+        </h6>
+        {{item.creativity}}
+    </div>
+    <div class="col-md-3">
+        <h6>
+            <strong> Usability </strong>
+        </h6>
+        {{item.usability}}
+    </div>
+    <div class="col-md-3">
+        <h6>
+            <strong> Average </strong>
+        </h6>
+        {{item.average}}
+    </div>
+    {% endfor %}
+</div>
 </div>
 
 {% endblock %}

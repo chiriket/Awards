@@ -4,8 +4,7 @@
 {{block.super}}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+         <div class="col-md-8">
             <div class="card mb-3" id="img-proj">
                 <div>
                     <img class="img-responsive" src="{{project.screenshot.url}}" alt="Card image cap" width="100%;"
@@ -17,6 +16,12 @@
                     <p class="card-text">{{project.project.user.username}}</p>
                     <p class="card-text" style="font-size: 20px;"><small class="text-muted">{{project.pub_date}}</small></p>
                     <a href="{% url 'rate' project.id %}"><button class="btn btn-outline-primary">Vote Now</button></a>
+                    <h6>Star Rating</h6>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
                 </div>
             </div>
         </div>
@@ -32,25 +37,25 @@
         </div>
         <div class="col-md-2">
             <h6>
-                <stong> Design </stong>
+                <strong> Design </strong>
             </h6>
             {{item.design}}
         </div>
         <div class="col-md-2">
             <h6>
-                <stong> Creativity </stong>
+                <strong> Creativity </strong>
             </h6>
             {{item.creativity}}
         </div>
         <div class="col-md-3">
             <h6>
-                <stong> Usability </stong>
+                <strong> Usability </strong>
             </h6>
             {{item.usability}}
         </div>
         <div class="col-md-3">
             <h6>
-                <stong> Average </stong>
+                <strong> Average </strong>
             </h6>
             {{item.average}}
         </div>
