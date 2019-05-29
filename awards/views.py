@@ -56,11 +56,11 @@ def signup(request):
             user.save()
             current_site = get_current_site(request)
             mail_subject = 'Activate your Awards account.'
-            message = render_to_string('acc_active_email.html', {
+            message = render_to_string('n', {
                 'user': user,
                 'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':account_activation_token.make_token(user),
+                # 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                # 'token':account_activation_token.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
@@ -104,16 +104,6 @@ def upload_project(request):
 def loader(request):
     return render(request, 'loader.html')
 
-# def index(request):
-#     date = dt.date.today()
-#     photos = Project.objects.all()
-#     # print(photos)
-#     comm = ReviewForm()
-#     profiles = Profile.objects.all()
-#     # print(profiles)
-#     form = ReviewForm()
-#     return render(request, 'all-posts/index.html', {"date": date,"comm":comm, "photos":photos, "profiles":profiles, "form":form})
-
 def new_project(request):
     current_user = request.user
     profile = Profile.objects.get(user=current_user)
@@ -130,15 +120,6 @@ def new_project(request):
         form = ProjectForm()
     return render(request, 'new_project.html', {"form": form})
  
-
-def profile(request):
-    date = dt.date.today()
-    current_user = request.user
-    profile = Profile.objects.get(user=current_user.id)
-    posts = Project.objects.filter(user=current_user)
-    return render(request, 'profile/profile.html', {"date": date, "profile":profile, "posts":posts})
-
-@login_required(login_url='/accounts/login/')
 def search_results(request):
     if 'username' in request.GET and request.GET["username"]:
         search_term = request.GET.get("username")
@@ -165,20 +146,7 @@ def review(request,image_id):
             comment.image = image
             comment.save()
     return redirect('index')
-# Create your views here.
 
-# @login_required(login_url='/accounts/login')
-# def upload_project(request):
-#     if request.method == 'POST':
-#         uploadform = ProjectForm(request.POST, request.FILES)
-#         if uploadform.is_valid():
-#             upload = uploadform.save(commit=False)
-#             upload.profile = request.user.profile
-#             upload.save()
-#             return redirect('home_page')
-#     else:
-#         uploadform = ProjectForm()
-#     return render(request,'upload_project.html',locals())
 
 @login_required(login_url='/accounts/login/')
 def edit_profile(request):
@@ -209,3 +177,21 @@ def vote(request,project_id):
    except DoesNotExist:
        raise Http404()
    return render(request,"project.html", locals())
+
+
+@login_required(login_url='/accounts/login')
+def rate_project(request,project_id):
+    project = Project.objects.get(pk=project_id)
+    profile = User.objects.get(username=request.user)
+    if request.method == 'POST':
+        rateform = RateForm(request.POST, request.FILES)
+        print(rateform.errors)
+        if rateform.is_valid():
+            rating = rateform.save(commit=False)
+            rating.project = project
+            rating.user = request.user
+            rating.save()
+            return redirect('vote',project_id)
+    else:
+        rateform = RateForm()
+    return render(request,'rate.html',locals())

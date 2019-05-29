@@ -10,7 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile',blank=True, null=True)
     Bio = models.TextField(max_length = 50,null = True)
     profile_pic = models.ImageField(upload_to='profile/')
-    pub_date_created = models.DateTimeField(auto_now_add=True, null=True)
+    # pub_date_created = models.DateTimeField(auto_now_add=True, null=False)
 
     def save_profile(self):
         self.save()
@@ -59,12 +59,12 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Project(models.Model):
-    # screenshot = models.ImageField(upload_to = 'images/')
+    screenshot = models.ImageField(upload_to = 'images/')
     project_name = models.CharField(max_length =10)
     project_url = models.CharField(max_length =50)
     # location = models.CharField(max_length =10)
     profile = models.ForeignKey(Profile, null = True,related_name='project')
-    # pub_date = models.DateTimeField(auto_now_add=True, null=True)
+    pub_date = models.DateTimeField(auto_now_add=True, null=True)
     # user= models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     
     class Meta:

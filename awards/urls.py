@@ -11,6 +11,7 @@ urlpatterns=[
    url(r'^edit/',views.edit_profile, name='edit_profile'),
    url(r'^signup/$', views.signup, name='signup'), 
    url(r'^upload/$', views.upload_project, name='upload_project'),
+   url(r'^vote/(?P<project_id>\d+)',views.vote, name='vote'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
