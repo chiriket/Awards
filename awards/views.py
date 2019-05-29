@@ -198,3 +198,14 @@ def edit_profile(request):
 def view_project(request):
     project = Project.objects.get_all()
     return render(request,'home.html', locals())
+
+@login_required(login_url='/accounts/login/')
+def vote(request,project_id):
+   try:
+       project = Project.objects.get(pk=project_id)
+       rate = Rate.objects.filter(project_id=project_id).all()
+       print([r.project_id for r in rate])
+       rateform = RateForm()
+   except DoesNotExist:
+       raise Http404()
+   return render(request,"project.html", locals())
