@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.db import models
 from django.http import Http404
-# from .forms import ProjectForm,ProfileForm,ReviewsForm
+from .forms import ProjectForm,ProfileForm,ReviewForm
 
 # Create your views here.
 from django.contrib.auth import login, authenticate
