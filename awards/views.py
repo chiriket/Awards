@@ -138,7 +138,6 @@ def review(request,image_id):
             comment.save()
     return redirect('index')
 
-
 @login_required(login_url='/accounts/login/')
 def edit_profile(request):
     if request.method == 'POST':
@@ -152,6 +151,19 @@ def edit_profile(request):
         form = ProfileForm()
 
     return render(request, 'profile/edit_profile.html', {'form':form})
+# @login_required(login_url='/accounts/login/')
+# def edit_profile(request):
+#     if request.method == 'POST':
+#         form = ProfileForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             edit = form.save(commit=False)
+#             edit.user = request.user
+#             edit.save()
+#             return redirect('profile/edit_profile')
+#     else:
+#         form = ProfileForm()
+
+#     return render(request, 'profile/edit_profile.html', {'form':form})
 
 
 def view_project(request):
