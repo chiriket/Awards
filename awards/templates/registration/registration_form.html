@@ -1,39 +1,59 @@
 {%extends "base.html"%} {% load bootstrap4 %}
 {% block content %}
-<div class="container">
-  <div class="row">
-    <!-- Empty div -->
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      {% if form.errors %}
-        <p> Some Information Might be Incorrect </p>
-      {% endif %}
-      <div class="panel panel-default">
+<div class="container-fluid" id="reg">
+    <div class="row">
+        <!-- Empty div -->
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            {% if form.errors %}
+            <h6> Some Information Might be Incorrect </h6>
+            {% endif %}
+            <div class="card" id="user">
 
-        <div class="panel-heading">
-          <h3 class="text-center">Sign Up</h3>
-        </div>
-        <div class="panel-body">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8" style="text-align: center; color: dimgray;" style="font-size:14;">
+                            WELCOME TO AWWWARDS.
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <div class="row">
+                        <h6 style="text-align:center;"><strong>Register With</strong></h6>
+                        <h6 style="text-align:center;">Are you Member? <a href="/accounts/login/?next=/">sign-in</a></h6>
+                    </div>
 
-          <form  action="/accounts/register/" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <div class="form-group">
-              <input type="submit" class="btn btn-primary btn-sm" value="Sign Up">
+                </div>
+
+
+
+                <div class="card-body">
+
+                    <form action="/accounts/register/" method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-sm" value="CREATE YOUR ACCOUNT" style="background-color:#3897f0;padding-left: 110px;padding-right: 110px;">
+                        </div>
+
+                        <input type="hidden" name="next" value="{{next}}">
+
+                    </form>
+
+                </div>
+                <div class="card-footer text-center " id="footer">
+                    © 2018 Awwwards. All rights reserved.
+                    <br>
+                    By signing up, I agree to Awwwards's
+                    <br>
+                    <a href="https://help.instagram.com/581066165581870" target="blank" style="color:gray">Terms of
+                        Service</a>
+
+                </div>
+
             </div>
 
-            <input type="hidden" name="next" value="{{next}}">
-
-          </form>
-
         </div>
-
-      </div>
-
     </div>
-    <!-- empty div -->
-    <div class="col-md-4"></div>
-  </div>
 </div>
-
 {% endblock %}

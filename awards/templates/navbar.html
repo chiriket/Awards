@@ -8,14 +8,44 @@
           </a>
 
     </div>
+    <!-- <section class="sect">
+      <div>
+          <div class="box-piesite" style = "float: left">
+              <ul>
+                  <li class="design">
+                      <div class="piesite" id="pie_0" data-pie="2.04"></div>
+                      <br>
+                      <p style="color:white;font-size: 12px;">DESIGN</p>
+                  </li>
+                  <li class="usability">
+                      <div class="piesite" id="pie_2" data-pie="5.02"></div>
+                      <br>
+                      <p style="color:white;font-size: 12px;">USABILITY</p>
+                  </li>
+
+                  <li class="creativity">
+                      <div class="piesite" id="pie_1" data-pie="2.04"></div>
+                      <br>
+                      <p style="color:white;font-size: 12px;">CREATIVITY</p>
+                  </li>
+                  <li class="total">
+                      <div class="piesite" id="pie_3" data-pie="6.43"></div>
+                      <br>
+                      <p style="color:white;font-size: 12px;">TOTAL</p>
+                  </li>
+              </ul>
+          </div>
+      </div>
+
+  </section> -->
     {% if user.is_authenticated %}
     
             {% if request.user.profile.profile_pic %}
                 <section> <img style="border-radius: 50% ; padding: 0.15rem;   background: linear-gradient(to right bottom, #2cd8a4, #2ec97b);" class=" img-circle"
-                src="{{request.user.profile.profile_pic.url}}" alt="" width="50px" height="50px"">  </section> <br>
+                src="{{request.user.profile.profile_pic.url}}" alt="" width="50px" height="50px"> </section> <br>
             {% else %}
                 <img style="border-radius: 50% ; padding: 0.15rem;  background: linear-gradient(to right bottom, #2cd88888, #2ec96970);" class=" img-circle"
-                src="https://www.bristolbrewing.com/wp-content/uploads/2017/08/default-avatar.png" alt="" width="50px" height="50px""> </section> <br>
+                src="https://www.bristolbrewing.com/wp-content/uploads/2017/08/default-avatar.png" alt="" width="50px" height="50px"> </section> <br>
             {% endif %}
 
             <div class="dropdown">
@@ -49,7 +79,7 @@
         <h6><a href="#" style="color: white;">{{ user.username|upper}}</a></h6> 
         <hr>
         <a href="/">Home</a>
-        <a href="{% url 'signup'%}">Register</a>
+        <a href="/accounts/register/" style="color:black; font-size: 13px;">REGISTER /</a>
         <a style="font-size:15px;" class='btn btn-default' href="/accounts/login">Login</a>
        
         <a href="{%url 'upload_project'%}"> Submit your site </a>
