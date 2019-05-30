@@ -18,12 +18,6 @@ from django.template.loader import render_to_string
 # from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-# Rest Api
-# from .permissions import IsAdminOrReadOnly
-# from rest_framework.response import Response
-# from rest_framework.views import APIView
-# from .serializer import ProjectSerializer,ProfileSerializer
-# from rest_framework import status
 
 
 def index(request):
@@ -151,19 +145,6 @@ def edit_profile(request):
         form = ProfileForm()
 
     return render(request, 'profile/edit_profile.html', {'form':form})
-# @login_required(login_url='/accounts/login/')
-# def edit_profile(request):
-#     if request.method == 'POST':
-#         form = ProfileForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             edit = form.save(commit=False)
-#             edit.user = request.user
-#             edit.save()
-#             return redirect('profile/edit_profile')
-#     else:
-#         form = ProfileForm()
-
-#     return render(request, 'profile/edit_profile.html', {'form':form})
 
 
 def view_project(request):
