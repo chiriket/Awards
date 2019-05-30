@@ -1,6 +1,6 @@
 ## Awards
 
-### By Shirley Keter .2019
+### By Shirley Keter .May 2019
 
 ## Description
 The application allows users to post their projects which are reviewed by peers based on design, usability and content.Users can search  and view others scores and profile details.
